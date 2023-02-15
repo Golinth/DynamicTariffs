@@ -25,14 +25,13 @@ public class TariffUtil extends BaseCampaignEventListener {
      */
     @Override
     public void reportPlayerOpenedMarket(MarketAPI market) {
-        if(SettingsUtil.isWhitelisted(market)){
-            if(SettingsUtil.getGranular()){
-                modTariffGran(market);
-                log.info("DynamicTariffs: Player has Granular enabled");
-            } else {
-                modTariff(market);
-            }
-        } 
+        if(SettingsUtil.getGranular()){
+            modTariffGran(market);
+            log.info("DynamicTariffs: Player has Granular enabled");
+        } else {
+            modTariff(market);
+        }
+        
         log.info("DynamicTariffs: Player opened market");
     }
 
@@ -44,9 +43,7 @@ public class TariffUtil extends BaseCampaignEventListener {
      */
     @Override
     public void reportPlayerClosedMarket(MarketAPI market) {
-        if(SettingsUtil.isWhitelisted(market)){
-            market.getTariff().unmodify("dynamictariffs");
-        }
+        market.getTariff().unmodify("dynamictariffs");
         log.info("DynamicTariffs: Player closed market");
     }
 
